@@ -185,7 +185,7 @@ def find_seed(loc):
     return -1
 
 def main():
-    path = "test"
+    path = "input"
     parse_ranges(path)
     min_loc = float("inf")
     for seed in seeds:
@@ -197,10 +197,8 @@ def main():
     for (l, r) in zip(seeds[::2], seeds[1::2]):
         seed_ranges.append((l, r))
 
-    max_loc = max(l + r for (l, r) in seed_ranges)
-    print(max_loc)
     min_loc = float("inf")
-    for loc in range(max_loc + 1):
+    for loc in tqdm(range(100000000)):
         seed = find_seed(loc)
         if seed != -1:
             min_loc = min(min_loc, loc)
