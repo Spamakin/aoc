@@ -7,16 +7,15 @@ wl = list()
 lt = list()
 th = list()
 hl = list()
-seeds = set()
-range_seeds = set()
+seeds = list()
+seed_ranges = list()
 
 def parse_ranges(path):
     # get seeds
     with open(f"{path}/seeds.txt") as f:
         seed_s = f.readline()
-        nums = [int(num) for num in seed_s.split()]
-        for num in nums:
-            seeds.add(num)
+        for num in seed_s.split():
+            seeds.append(int(num))
         # print(seeds)
 
 
@@ -129,24 +128,83 @@ def find_loc(seed):
     # print(f"{seed}, {soil}, {fert}, {water}, {light}, {temp}, {hum}, {loc}")
     return loc
 
-def main():
-    parse_ranges("input")
-    # min_loc = float("inf")
-    # for seed in seeds:
-    #     loc = find_loc(seed)
-    #     min_loc = min(min_loc, loc)
-    # print(min_loc)
+def find_seed(loc):
+    # hl
+    hum = loc
+    for d, s, r in hl:
+        if d <= loc < d + r:
+            hum = s + (loc - d)
+            break
 
-    # get seed_ranges
+    # th
+    temp = hum
+    for d, s, r in th:
+        if d <= hum < d + r:
+            temp = s + (hum - d)
+            break
+
+    # lt
+    light = temp
+    for d, s, r in lt:
+        if d <= temp < d + r:
+            light = s + (temp - d)
+            break
+
+    # wl
+    water = light
+    for d, s, r in wl:
+        if d <= light < d + r:
+            water = s + (light - d)
+            break
+
+    # fw
+    fert = water
+    for d, s, r in fw:
+        if d <= water < d + r:
+            fert = s + (water - d)
+            break
+
+    # sf
+    soil = fert
+    for d, s, r in sf:
+        if d <= fert < d + r:
+            soil = s + (fert - d)
+            break
+    # ss
+    seed = soil
+    for d, s, r in ss:
+        if d <= soil < d + r:
+            seed = s + (soil - d)
+            break
+
+    for (l, r) in seed_ranges:
+        if l <= seed < l + r:
+            # print(f"{loc}, {hum}, {temp}, {light}, {water}, {fert}, {soil}, {seed}")
+            # print(f"{seed}, {soil}, {fert}, {water}, {light}, {temp}, {hum}, {loc}")
+            return seed
+    return -1
+
+def main():
+    path = "test"
+    parse_ranges(path)
     min_loc = float("inf")
-    with open(f"input/seeds.txt") as f:
-        seed_s = f.readline()
-        nums = [int(num) for num in seed_s.split()]
-        for i in range(0, len(nums), 2):
-            for seed in tqdm(range(nums[i], nums[i] + nums[i + 1])):
-                loc = find_loc(seed)
-                min_loc = min(min_loc, loc)
-            print(min_loc)
+    for seed in seeds:
+        loc = find_loc(seed)
+        min_loc = min(min_loc, loc)
+    print("part 1:", min_loc)
+
+    # get seed_ranges [l, l + r)
+    for (l, r) in zip(seeds[::2], seeds[1::2]):
+        seed_ranges.append((l, r))
+
+    max_loc = max(l + r for (l, r) in seed_ranges)
+    print(max_loc)
+    min_loc = float("inf")
+    for loc in range(max_loc + 1):
+        seed = find_seed(loc)
+        if seed != -1:
+            min_loc = min(min_loc, loc)
+    print("part 2:", min_loc)
 
 if __name__ == "__main__":
     main()
