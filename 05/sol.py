@@ -10,6 +10,7 @@ hl = list()
 seeds = list()
 seed_ranges = list()
 
+
 def parse_ranges(path):
     # get seeds
     with open(f"{path}/seeds.txt") as f:
@@ -17,7 +18,6 @@ def parse_ranges(path):
         for num in seed_s.split():
             seeds.append(int(num))
         # print(seeds)
-
 
     # ss
     with open(f"{path}/ss.txt") as f:
@@ -75,6 +75,7 @@ def parse_ranges(path):
             hl.append(nums)
         # print(hl)
 
+
 def find_loc(seed):
     # ss
     soil = seed
@@ -128,6 +129,7 @@ def find_loc(seed):
     # print(f"{seed}, {soil}, {fert}, {water}, {light}, {temp}, {hum}, {loc}")
     return loc
 
+
 def find_seed(loc):
     # hl
     hum = loc
@@ -177,12 +179,13 @@ def find_seed(loc):
             seed = s + (soil - d)
             break
 
-    for (l, r) in seed_ranges:
+    for l, r in seed_ranges:
         if l <= seed < l + r:
             # print(f"{loc}, {hum}, {temp}, {light}, {water}, {fert}, {soil}, {seed}")
             # print(f"{seed}, {soil}, {fert}, {water}, {light}, {temp}, {hum}, {loc}")
             return seed
     return -1
+
 
 def main():
     path = "input"
@@ -194,7 +197,7 @@ def main():
     print("part 1:", min_loc)
 
     # get seed_ranges [l, l + r)
-    for (l, r) in zip(seeds[::2], seeds[1::2]):
+    for l, r in zip(seeds[::2], seeds[1::2]):
         seed_ranges.append((l, r))
 
     min_loc = float("inf")
@@ -203,6 +206,7 @@ def main():
         if seed != -1:
             min_loc = min(min_loc, loc)
     print("part 2:", min_loc)
+
 
 if __name__ == "__main__":
     main()

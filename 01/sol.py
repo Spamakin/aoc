@@ -9,7 +9,7 @@ with open("input.txt", "r") as f:
                 break
         for c in reversed(line):
             if ord("0") <= ord(c) <= ord("9"):
-                num = 10*num + int(c)
+                num = 10 * num + int(c)
                 break
 
         total += int(num)
@@ -19,7 +19,18 @@ with open("input.txt", "r") as f:
 with open("input.txt", "r") as f:
     # Part 2
     total = 0
-    words = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
+    words = [
+        "zero",
+        "one",
+        "two",
+        "three",
+        "four",
+        "five",
+        "six",
+        "seven",
+        "eight",
+        "nine",
+    ]
     nums = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
     for line in f:
         num = 0
@@ -50,7 +61,7 @@ with open("input.txt", "r") as f:
                 curr_idx = idx
                 curr = i
 
-        num = 10*num + curr
+        num = 10 * num + curr
         total += num
 
     print(total)

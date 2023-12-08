@@ -2,6 +2,7 @@ from collections import defaultdict
 
 mult = defaultdict(int)
 
+
 def score(win, have):
     n = 0
     for card in have:
@@ -10,7 +11,8 @@ def score(win, have):
     if n == 0:
         return 0, 0
     else:
-        return 2**(n-1), n
+        return 2 ** (n - 1), n
+
 
 def parse(line):
     cards = line.split(": ")[1]
@@ -21,6 +23,7 @@ def parse(line):
     have = [int(num) for num in have_s]
 
     return win, have
+
 
 def main():
     with open("input.txt", "r") as f:
@@ -39,7 +42,6 @@ def main():
             curr += 1
         print(total)
         print(copies)
-
 
 
 if __name__ == "__main__":

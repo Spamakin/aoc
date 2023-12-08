@@ -3,6 +3,7 @@ with open("input.txt", "r") as f:
     for line in f:
         lines.append(line.strip())
 
+
 def is_part(curr, line, i, j):
     forbidden = ".0123456789"
     for idx in range(i, j + 1):
@@ -32,11 +33,12 @@ def is_part(curr, line, i, j):
                 return True
     return False
 
+
 def find_nums(curr, line):
     digits = "0123456789"
     nums = []
     i = 0
-    while i  < len(line):
+    while i < len(line):
         if line[i] in digits:
             j = i
             while j < len(line) and line[j] in digits:
@@ -49,6 +51,7 @@ def find_nums(curr, line):
 
     return sum(nums)
 
+
 def is_gear(curr, line, i):
     digits = "0123456789"
     nums = []
@@ -57,16 +60,16 @@ def is_gear(curr, line, i):
         j = i - 1
         while j >= 0 and line[j] in digits:
             j -= 1
-        print(line[j + 1:i])
-        if len(line[j + 1:i]) > 0:
-            nums.append(int(line[j + 1:i]))
+        print(line[j + 1 : i])
+        if len(line[j + 1 : i]) > 0:
+            nums.append(int(line[j + 1 : i]))
     # right
     if i < len(line) + 1 and line[i + 1] in digits:
         j = i + 1
         while j < len(line) and line[j] in digits:
             j += 1
-        if len(line[i + 1:j]) > 0:
-            nums.append(int(line[i + 1:j]))
+        if len(line[i + 1 : j]) > 0:
+            nums.append(int(line[i + 1 : j]))
     # top
     if curr > 0:
         l = i - 1
@@ -91,7 +94,7 @@ def is_gear(curr, line, i):
         r = i + 1
         while r < len(lines[curr + 1]) and lines[curr + 1][r] in digits:
             r += 1
-        s = lines[curr + 1][l + 1:r]
+        s = lines[curr + 1][l + 1 : r]
         pot = s.split(".")
         filtered = []
         for p in pot:
@@ -112,12 +115,14 @@ def is_gear(curr, line, i):
     else:
         return 0
 
+
 def find_gears(curr, line):
     total = 0
     for i in range(len(line)):
         if line[i] == "*":
             total += is_gear(curr, line, i)
     return total
+
 
 def main():
     # curr = 0
@@ -133,6 +138,7 @@ def main():
         total += find_gears(curr, line)
         curr += 1
     print(total)
+
 
 if __name__ == "__main__":
     main()

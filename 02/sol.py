@@ -10,7 +10,7 @@ def process_round(line):
     rounds_arr = rounds.split("; ")
     game = []
     for handfuls in rounds_arr:
-        r, g, b  = 0, 0, 0
+        r, g, b = 0, 0, 0
         colors = handfuls.split(", ")
         for color in colors:
             if "red" in color:
@@ -27,6 +27,7 @@ def process_round(line):
 
     return id, game
 
+
 def is_possible(game):
     for handful in game:
         r, g, b = handful
@@ -38,6 +39,7 @@ def is_possible(game):
             return False
 
     return True
+
 
 def power(game):
     r_min, g_min, b_min = 0, 0, 0
@@ -55,7 +57,8 @@ def main():
         total = 0
         for line in f:
             id, game = process_round(line)
-            if is_possible(game): total += id
+            if is_possible(game):
+                total += id
 
         print(total)
 
@@ -66,6 +69,7 @@ def main():
             total += power(game)
 
         print(total)
+
 
 if __name__ == "__main__":
     main()
